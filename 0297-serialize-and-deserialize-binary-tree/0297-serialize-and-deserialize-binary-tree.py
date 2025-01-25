@@ -33,18 +33,18 @@ class Codec:
         :rtype: TreeNode
         """
         data = data.split(',')
-        def myfunc():
-            nonlocal data
+        def myfunc(data):
+            
             if data[0] == " ":
-                data = data[1:]
+                data.pop(0)
                 return None
             answer = TreeNode(data[0])
-            data = data[1:]
-            answer.right = myfunc()
-            answer.left = myfunc()
+            data.pop(0)
+            answer.right = myfunc(data)
+            answer.left = myfunc(data)
             return answer
 
-        answer = myfunc()
+        answer = myfunc(data)
         return answer
 
 
