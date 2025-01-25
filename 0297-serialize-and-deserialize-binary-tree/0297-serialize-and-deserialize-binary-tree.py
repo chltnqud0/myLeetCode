@@ -32,13 +32,13 @@ class Codec:
         :type data: str
         :rtype: TreeNode
         """
-        data = list(data.split(','))
+        data = data.split(',')
         def myfunc():
             nonlocal data
             if data[0] == " ":
                 data = data[1:]
                 return None
-            answer = TreeNode(int(data[0]))
+            answer = TreeNode(data[0])
             data = data[1:]
             answer.right = myfunc()
             answer.left = myfunc()
