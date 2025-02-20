@@ -5,36 +5,32 @@
 #         self.next = next
 class Solution:
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
-        answer = ListNode()
-        temp = answer
-        flag = True
-        if len(lists) == 0:
+        if not lists:
             return None
-        while lists:
-            comp = 10001
-            index = 10001
-            lst = []
-            for i in range(len(lists)):
-                if not lists[i]:
-                    lst.append(i)
-                elif lists[i].val < comp:
-                    comp = lists[i].val
-                    index = i
-            if index == 10001:
-                break
-            temp.val = comp
-            flag = False
-            if lists[index].next:
-                lists[index] = lists[index].next
+        
+        hq = []
+        
+        for i in range(len(lists)):
+            if not lists[i]:
+                continue
             else:
-                lst.append(index)
-            lst.sort(reverse=True)
-            for t in lst:
-                del lists[t]
+                temp = lists[i]
+                while True:
+                    heapq.heappush(hq, temp.val)
+                    if temp.next:
+                        temp = temp.next
+                    else:
+                        break
 
-            if lists:
-                temp.next = ListNode()
-                temp = temp.next
-        if flag:
+        if not hq:
             return None
+        answer = ListNode()
+        pointer = answer
+        length = len(hq)
+        for h in range(length):
+            pointer.val = heapq.heappop(hq)
+            if h != length - 1:
+                pointer.next = ListNode()
+                pointer = pointer.next
+
         return answer
